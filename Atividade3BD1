@@ -1,0 +1,42 @@
+1. Resolva as consultas em Álgebra e Cálculo Relacional para o seguinte modelo relacional.
+
+Aluno (id_aluno, nome)
+       ────────
+Disciplina (id_disciplina, nome, carga_horaria)
+            ─────────────
+Professor (id_professor, nome, titulacao)
+           ────────────
+Turma (id_periodo, id_disciplina, id_turma, horario, sala, id_professor)
+       ──────────  ─────────────  ────────
+Historico (id_periodo, id_disciplina, id_turma, id_aluno, frequencia, nota)
+           ──────────  ─────────────  ────────  ────────
+
+(s para sigma e p para pi )
+
+a) Forneça nome e titulação dos professores.
+ p nome (Professor) ^ p titulacao(Professor)
+
+b) Forneça id, freqüência e nota dos alunos matriculados em 20042 na turma 1 da disciplina MDC053.
+p a.id_aluno, h.frequencia, h.nota(s disciplina = ´MDC053´ (Turma) )
+
+c) Encontre a sala ocupada pela disciplina MDC053 em cada período que foi oferecida. 
+p t.sala, 
+
+d) Localize os alunos que tiveram aula com o professor 3056 em algum período. 
+p id_aluno, id_disciplina(s id_professor = 3056(Professor)) 
+
+e) Forneça histórico escolar do aluno 199839550, contendo nome do aluno, período, nome da disciplina, freqüência e nota.
+
+f) Forneça os alunos que não possuem nota na disciplina MDC053.
+p id_aluno, nota(s id_disciplina = 'MDC053')
+
+g) Encontre as turmas do professor 3056 e do aluno 199839550.
+p id_turma, id_professor( s id_professor = '3056' (Turma) ^ id_turma, id_aluno(s id_aluno = 199839550(Aluno))
+
+h) Encontre as disciplinas que não foram ministras pelo professor 3056.
+p id_disciplina, id_professor( s id_professor =! 3056 (Professor))
+
+i) Encontre o nome dos alunos que cursaram todas as disciplinas.
+s a.nome(Aluno) interseção s id_disciplina (Disciplina)
+
+j) Encontre os alunos que não foram reprovados (frequencia < 75% ou nota < 5) em nenhuma disciplina.
