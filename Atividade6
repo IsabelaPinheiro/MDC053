@@ -1,0 +1,119 @@
+**********************************************************************
+** Visual Studio 2019 Developer Command Prompt v16.0.3
+** Copyright (c) 2019 Microsoft Corporation
+**********************************************************************
+
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community>C:\xampp\mysql_start.bat
+Diese Eingabeforderung nicht waehrend des Running beenden
+Please dont close Window while MySQL is running
+MySQL is trying to start
+Please wait  ...
+MySQL is starting with mysql\bin\my.ini (console)
+2019-10-11  8:47:16 616 [Note] Using unique option prefix 'key_buffer' is error-prone and can break in the future. Please use the full name 'key_buffer_size' instead.
+2019-10-11  8:47:16 616 [Note] mysql\bin\mysqld (mysqld 10.1.36-MariaDB) starting as process 9152 ...
+
+MySQL konnte nicht gestartet werden
+MySQL could not be started
+Pressione qualquer tecla para continuar. . .
+C:\xampp>C:\Windows\System32\cmd.exe
+Microsoft Windows [versão 10.0.17134.472]
+(c) 2018 Microsoft Corporation. Todos os direitos reservados.
+
+C:\xampp>C:\xampp\mysql\bin
+'C:\xampp\mysql\bin' não é reconhecido como um comando interno
+ou externo, um programa operável ou um arquivo em lotes.
+
+C:\xampp> cd C:\xampp\mysql\bin
+
+C:\xampp\mysql\bin> mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 2
+Server version: 10.1.36-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+5 rows in set (0.01 sec)
+
+MariaDB [(none)]> CREATE DATABASE projetos;
+Query OK, 1 row affected (0.02 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| projetos           |
+| test               |
++--------------------+
+6 rows in set (0.00 sec)
+
+
+MariaDB [projetos]> CREATE TABLE gerente(
+    -> num_gerente INT NOT NULL PRIMARY KEY,
+    -> nom_gerente VARCHAR(100) NOT NULL);
+Query OK, 0 rows affected (0.15 sec)
+
+MariaDB [projetos]> CREATE TABLE departamento(
+    -> num_dpto INT NOT NULL PRIMARY KEY,
+    -> nome_dpto VARCHAR(100) NOT NULL);
+Query OK, 0 rows affected (0.11 sec)
+
+MariaDB [projetos]> SHOW TABLES;
++--------------------+
+| Tables_in_projetos |
++--------------------+
+| departamento       |
+| gerente            |
++--------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [projetos]> DESC gerente;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| num_gerente | int(11)      | NO   | PRI | NULL    |       |
+| nom_gerente | varchar(100) | NO   |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+2 rows in set (0.02 sec)
+
+MariaDB [projetos]> CREATE TABLE emprega(
+    -> num_empregado INT NOT NULL PRIMARY KEY,
+    -> nome_empregado VARCHAR(100) NOT NULL,
+    -> num_dpto INT NOT NULL,
+    -> FOREIGN KEY(num_dpto) REFERENCES departamento(num_dpto)
+    -> );
+Query OK, 0 rows affected (0.12 sec)
+
+MariaDB [projetos]> CREATE TABLE projeto(
+    -> num_projeto INT NOT NULL PRIMARY KEY,
+    -> nome_projeto VARCHAR(100) NOT NULL,
+    -> data_inicio_projeto DATE,
+    -> num_gerente INT NOT NULL,
+    -> FOREIGN KEY(num_gerente) REFERENCES gerente(num_gerente)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+MariaDB [projetos]> CREATE TABLE projeto_empregado(
+    -> num_projeto INT NOT NULL,
+    -> num_empregado INT NOT NULL,
+    -> horas_trabalhadas_projeto SMALLINT DEFAULT 0,
+    -> PRIMARY KEY(num_projeto,num_empregado),
+    -> FOREIGN KEY(num_projeto) REFERENCES projeto(num_projeto),
+    -> FOREIGN KEY(num_empregado) REFERENCES emprega(num_empregado)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
