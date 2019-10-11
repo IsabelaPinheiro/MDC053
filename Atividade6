@@ -62,7 +62,7 @@ MariaDB [(none)]> show databases;
 +--------------------+
 6 rows in set (0.00 sec)
 
-
+a)
 MariaDB [projetos]> CREATE TABLE gerente(
     -> num_gerente INT NOT NULL PRIMARY KEY,
     -> nom_gerente VARCHAR(100) NOT NULL);
@@ -117,3 +117,207 @@ MariaDB [projetos]> CREATE TABLE projeto_empregado(
     -> FOREIGN KEY(num_empregado) REFERENCES emprega(num_empregado)
     -> );
 Query OK, 0 rows affected (0.10 sec)
+b)
+MariaDB [cursos]> CREATE DATABASE pedidos;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [cursos]> USE pedidos;
+Database changed
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]>
+MariaDB [pedidos]> CREATE TABLE fornecedor(
+    -> cod_fornecedor INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> nom_fornecedor VARCHAR(100) NOT NULL,
+    -> end_fornecedor VARCHAR(100)
+    -> );
+Query OK, 0 rows affected (0.16 sec)
+
+MariaDB [pedidos]> CREATE TABLE material(
+    -> cod_material INT NOT NULL  AUTO_INCREMENT PRIMARY KEY,
+    -> dsc_material VARCHAR(100) NOT NULL,
+    -> vlr_unitario DECIMAL(12,2) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.14 sec)
+
+MariaDB [pedidos]> CREATE TABLE pedido(
+    -> cod_pedido INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> dat_emissao DATE NOT NULL,
+    -> cod_fornecedor INT NOT NULL,
+    -> vlr_total_pedido DECIMAL(12,2) DEFAULT 0,
+    -> FOREIGN KEY(cod_fornecedor) REFERENCES fornecedor(cod_fornecedor)
+    -> );
+Query OK, 0 rows affected (0.10 sec)
+
+MariaDB [pedidos]> CREATE TABLE pedido_material(
+    -> cod_pedido INT NOT NULL,
+    -> cod_material INT NOT NULL,
+    -> qtde_material SMALLINT NOT NULL CHECK (qtd_material>0),
+    -> vlr_material DECIMAL(12,2) NOT NULL,
+    -> PRIMARY KEY(cod_pedido,cod_material),
+    -> FOREIGN KEY(cod_pedido) REFERENCES pedido(cod_pedido),
+    -> FOREIGN KEY(cod_material) REFERENCES material(cod_material)
+    ->  );
+Query OK, 0 rows affected (0.10 sec)
+
+MariaDB [pedidos]> SHOW TABLES;
++-------------------+
+| Tables_in_pedidos |
++-------------------+
+| fornecedor        |
+| material          |
+| pedido            |
+| pedido_material   |
++-------------------+
+4 rows in set (0.00 sec)
+
+MariaDB [pedidos]> DESC fornecedor;
++----------------+--------------+------+-----+---------+----------------+
+| Field          | Type         | Null | Key | Default | Extra          |
++----------------+--------------+------+-----+---------+----------------+
+| cod_fornecedor | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nom_fornecedor | varchar(100) | NO   |     | NULL    |                |
+| end_fornecedor | varchar(100) | YES  |     | NULL    |                |
++----------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+MariaDB [pedidos]> DESC material;
++--------------+---------------+------+-----+---------+----------------+
+| Field        | Type          | Null | Key | Default | Extra          |
++--------------+---------------+------+-----+---------+----------------+
+| cod_material | int(11)       | NO   | PRI | NULL    | auto_increment |
+| dsc_material | varchar(100)  | NO   |     | NULL    |                |
+| vlr_unitario | decimal(12,2) | NO   |     | NULL    |                |
++--------------+---------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+MariaDB [pedidos]> DESC pedido;
++------------------+---------------+------+-----+---------+----------------+
+| Field            | Type          | Null | Key | Default | Extra          |
++------------------+---------------+------+-----+---------+----------------+
+| cod_pedido       | int(11)       | NO   | PRI | NULL    | auto_increment |
+| dat_emissao      | date          | NO   |     | NULL    |                |
+| cod_fornecedor   | int(11)       | NO   | MUL | NULL    |                |
+| vlr_total_pedido | decimal(12,2) | YES  |     | 0.00    |                |
++------------------+---------------+------+-----+---------+----------------+
+4 rows in set (0.01 sec)
+
+MariaDB [pedidos]> DESC pedido_material;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| cod_pedido    | int(11)       | NO   | PRI | NULL    |       |
+| cod_material  | int(11)       | NO   | PRI | NULL    |       |
+| qtde_material | smallint(6)   | NO   |     | NULL    |       |
+| vlr_material  | decimal(12,2) | NO   |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+c)
+MariaDB [projetos]> CREATE DATABASE cursos;
+Query OK, 1 row affected (0.00 sec)
+
+MariaDB [projetos]> USE cursos;
+Database changed
+MariaDB [cursos]> CREATE TABLE curso(
+    -> id_curso INT AUTO_INCREMENT PRIMARY KEY,
+    -> nome_curso VARCHAR(100) NOT NULL,
+    -> carga_horaria SMALLINT
+    -> );
+Query OK, 0 rows affected (0.12 sec)
+
+MariaDB [cursos]> CREATE TABLE aluno(
+    -> id_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> email_aluno VARCHAR(100),
+    -> fone_contato CHAR(14)
+    -> );
+Query OK, 0 rows affected (0.17 sec)
+
+MariaDB [cursos]> CREATE TABLE turma(
+    -> id_turma INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    -> id_curso INT,
+    -> id_aluno INT NOT NULL,
+    -> FOREIGN KEY(id_curso) REFERENCES curso(id_curso),
+    -> FOREIGN KEY(id_aluno) REFERENCES aluno(id_aluno)
+    -> );
+Query OK, 0 rows affected (0.33 sec)
+
+MariaDB [cursos]> SHOW TABLES;
++------------------+
+| Tables_in_cursos |
++------------------+
+| aluno            |
+| curso            |
+| turma            |
++------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [cursos]> DESC aluno;
++--------------+--------------+------+-----+---------+----------------+
+| Field        | Type         | Null | Key | Default | Extra          |
++--------------+--------------+------+-----+---------+----------------+
+| id_aluno     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| email_aluno  | varchar(100) | YES  |     | NULL    |                |
+| fone_contato | char(14)     | YES  |     | NULL    |                |
++--------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+MariaDB [cursos]> DESC curso;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| id_curso      | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nome_curso    | varchar(100) | NO   |     | NULL    |                |
+| carga_horaria | smallint(6)  | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+MariaDB [cursos]> DESC turma;
++----------+---------+------+-----+---------+----------------+
+| Field    | Type    | Null | Key | Default | Extra          |
++----------+---------+------+-----+---------+----------------+
+| id_turma | int(11) | NO   | PRI | NULL    | auto_increment |
+| id_curso | int(11) | YES  | MUL | NULL    |                |
+| id_aluno | int(11) | NO   | MUL | NULL    |                |
++----------+---------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
