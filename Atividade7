@@ -1,0 +1,176 @@
+/*a) Criar um banco de dados chamado academico no MySQL WorkBench
+ e execute o seguinte script DDL.
+*/
+
+CREATE DATABASE academico;
+USE academico;
+
+CREATE TABLE aluno(
+  id_aluno INT NOT NULL,
+  nome_aluno VARCHAR(100) NOT NULL,
+  PRIMARY KEY(id_aluno)
+);
+
+CREATE TABLE disciplina(
+  id_disciplina INT NOT NULL,
+  nome_disciplina VARCHAR(100) NOT NULL,
+  carga_horaria INT CHECK(carga_horaria > 0),
+  PRIMARY KEY(id_disciplina)
+);
+
+CREATE TABLE professor(
+  id_professor INT NOT NULL,
+  nome_professor VARCHAR(100) NOT NULL,
+  PRIMARY KEY(id_professor)
+);
+
+CREATE TABLE turma(
+  id_turma INT NOT NULL,
+  num_periodo INT NOT NULL,
+  id_professor INT,
+  id_disciplina INT,
+  PRIMARY KEY(id_turma),
+  FOREIGN KEY(id_professor) REFERENCES professor(id_professor) ON DELETE CASCADE,
+  FOREIGN KEY(id_disciplina) REFERENCES disciplina(id_disciplina)
+);
+
+CREATE TABLE historico(
+  id_historico INT NOT NULL,
+  id_turma INT NOT NULL,
+  id_aluno INT NOT NULL,
+  num_faltas SMALLINT,
+  media_final DECIMAL(3,1),
+  PRIMARY KEY(id_historico),
+  FOREIGN KEY(id_turma) REFERENCES turma(id_turma) ON DELETE CASCADE,
+  FOREIGN KEY(id_aluno) REFERENCES aluno(id_aluno)
+);
+
+/*b) Insira um registro na tabela aluno preechendo somente a coluna id_aluno com o valor 1.
+ Qual foi o resultado?*/
+  INSERT INTO aluno(id_aluno) VALUE (1);
+  
+  /*O comando rodou, inseriu o valor, mas deu warnning*/
+  
+  /*c) Insira os seguintes registros na tabela aluno.
+
+id_aluno        nome_aluno
+1               JOSE
+2               MARIA
+3               BRUNO
+4               CARLA
+5               PEDRO*/
+
+INSERT INTO aluno(id_aluno,nome_aluno) VALUES (1,'JOSE');
+INSERT INTO aluno(id_aluno,nome_aluno) VALUES (2,'MARIA');
+INSERT INTO aluno(id_aluno,nome_aluno) VALUES (3,'BRUNO');
+INSERT INTO aluno(id_aluno,nome_aluno) VALUES (4,'CLARA');
+INSERT INTO aluno(id_aluno,nome_aluno) VALUES (5,'PEDRO');
+
+/*d) Insira um registro na tabela disciplina com os valores 1 para id_disciplina,
+ BANCO DE DADOS I para nome_disciplina e -1 para carga_horaria. Qual foi o resultado?
+- Inseriu os dados noralmente.
+*/
+
+INSERT INTO disciplina(id_disciplina,nome_disciplina,carga_horaria)
+VALUES (1,'BANCO DE DADOS I', -1);
+
+/*e) Insira os seguintes registros na tabela disciplina.
+
+id_disciplina    nome_disciplina     carga_horaria
+1                BANCO DE DADOS I    60
+2                BANCO DE DADOS II   60*/
+
+UPDATE disciplina SET carga_horaria = 60
+WHERE id_disciplina = 1;
+INSERT INTO disciplina(id_disciplina,nome_disciplina,carga_horaria)
+VALUES (2,'BANCO DE DADOS II', 60);
+
+/*f) Insira os seguintes resgistros na tabela professor.
+id_professor   nome_professor
+1              LETICIA
+2              JOSE REGINALDO*/
+
+INSERT INTO professor(id_professor,nome_professor) VALUES (1,'LETICIA');
+INSERT INTO professor(id_professor,nome_professor) VALUES (2,'JOSE REGINALDO');
+
+/*g) Insira um registro na tabela turma com os valores 1 para id_turma, 20192 para num_periodo.
+ Qual foi o resultado?*/
+ 
+ INSERT INTO turma(id_turma,num_periodo) VALUES (1,20192);
+ 
+/*h) Insira um registro na tabela turma com os valores 1 para id_turma,
+ 20201 para num_periodo. Qual foi o resultado?
+*/
+
+UPDATE turma SET num_periodo = 20201
+WHERE id_turma = 1;
+
+/*i) Insira um registro na tabela turma com os valores 2 para id_turma,
+20201 para num_periodo e 3 para id_professor. Qual foi o resultado?
+-Não rodou*/
+
+INSERT INTO turma(id_turma,num_periodo,id_professor,id_disciplina) VALUES (2,20201,3,null);
+
+/*j) Insira os registros na tabela turma.
+
+id_turma   num_periodo   id_professor  id_disciplina
+3          20201         1             1
+4          20202         2             2
+*/
+
+INSERT INTO turma(id_turma,num_periodo,id_professor, id_disciplina) VALUES (3,20201,1,1);
+INSERT INTO turma(id_turma,num_periodo,id_professor, id_disciplina) VALUES (4,20202,2,2);
+
+/*k) Insira os registros na tabela historico.
+
+id_historico    id_turma   id_aluno
+1               1          1
+2               1          2
+3               1          3
+4               1          4
+5               3          1
+6               3          2
+7               4          3
+8               4          4*/
+
+INSERT INTO historico(id_historico,id_turma,id_aluno) VALUES (1,1,1);
+INSERT INTO historico(id_historico,id_turma,id_aluno) VALUES (2,1,2);
+INSERT INTO historico(id_historico,id_turma,id_aluno) VALUES (3,1,3);
+INSERT INTO historico(id_historico,id_turma,id_aluno) VALUES (4,1,4);
+INSERT INTO historico(id_historico,id_turma,id_aluno) VALUES (5,3,1);
+INSERT INTO historico(id_historico,id_turma,id_aluno) VALUES (6,3,2);
+INSERT INTO historico(id_historico,id_turma,id_aluno) VALUES (7,4,3);
+INSERT INTO historico(id_historico,id_turma,id_aluno) VALUES (8,4,4);
+
+/*l) Altere o nome do aluno JOSE para JOAO.*/
+
+UPDATE aluno SET nome_aluno = 'JOAO'
+WHERE id_aluno = 1;
+
+/*m) Altere o id_disciplina de BANCO DE DADOS I para o valor 3. Qual foi o resultado?
+-Erro dizendo que estou usando o modo seguro, assim não podendo alterar o id.
+*/
+
+UPDATE disciplina SET id_disciplina = 3
+WHERE nome_disciplina = 'BANCO DE DADOS I';
+
+/*n) Altere a media_final dos alunos que estão na turma de BANCO DE DADOS II para 5.*/
+
+UPDATE historico SET media_final = 5
+WHERE id_turma = 4;
+
+/*o) Exclua o aluno PEDRO. Qual foi o resultado?*/
+
+DELETE FROM aluno WHERE nome_aluno = 'PEDRO';
+
+/*p) Exclua a disciplina BANCO DE DADOS II. Qual foi o resultado?
+-Não pode ser excluída pois é chave estrangeira.
+*/
+
+DELETE FROM disciplina WHERE nome_disciplina = 'BANCO DE DADOS II';
+
+/*q) Exclua o professor JOSE REGINALDO. Qual foi o resultado?
+-Dado deletado.
+*/
+
+DELETE FROM professor WHERE nome_professor = 'JOSE REGINALDO';
