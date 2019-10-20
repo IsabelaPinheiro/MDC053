@@ -321,3 +321,65 @@ MariaDB [cursos]> DESC turma;
 +----------+---------+------+-----+---------+----------------+
 3 rows in set (0.01 sec)
 
+d)
+CREATE DATABASE consultas;
+USE consultas;
+
+CREATE TABLE especialidade(
+cod_especialidade INT NOT NULL,
+dsc_especialidade VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE paciente(
+id_paciente INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nome_paciente VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE medico(
+cod_medico INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nome_medico VARCHAR(100) NOT NULL,
+cod_especialista INT NOT NULL,
+FOREIGN KEY(cod_especialista) REFERENCES especialista(cod_especialista)
+);
+
+CREATE TABLE consulta(
+id_consulta INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+cod_medico INT NOT NULL,
+id_paciente INT NOT NULL,
+data_consulta DATE NOT NULL,
+FOREIGN KEY(cod_medico) REFERENCES medico(cod_medico),
+FOREIGN KEY REFERENCES(id_paciente) REFERENCES paciente(id_paciente)
+);
+
+e)
+CREATE DATABASE emprestimo;
+USE emprestimo;
+
+CREATE TABLE editora(
+cod_editora INT NOT NULL AUTO_INCREMENT PRIMARY KEY;
+nom_editora VARCHAR (100) NOT NULL
+);
+
+CREATE TABLE aluno(
+id_aluno INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+num_matricula INT NOT NULL UNIQUE,
+nome_aluno VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE livro(
+id_livro INT AUTO_INCREMENT PRIMARY KEY,
+num_isbn CHAR(13) NOT NULL UNIQUE,
+tit_livro VARCHAR(100) NOT NULL,
+num_paginas SMALLINT CHECK (num_paginas> 0),
+cod_editora INT NOT NULL,
+FOREIGN KEY(cod_editora) REFERENCES editora(cod_editora)
+);
+CREATE TABLE emprestimo(
+id_emprestimo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+id_livro INT NOT NULL,
+id_ aluno INT NOT NULL,
+dat_emprestimo DATA NOT NULL,
+dat_devolucao DATE,
+FOREIGN KEY(id_livro) REFERENCES livro(id_livro);
+FOREIGN KEY(id_aluno) REFERENCES aluno(id_aluno)
+);
