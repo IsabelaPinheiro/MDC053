@@ -1,0 +1,29 @@
+
+/*a) Forneça nome dos professores.*/
+SELECT nome_professor FROM professor;
+
+/*b) Liste os alunos cujo nome terminam em A.*/
+SELECT nome_aluno FROM aluno WHERE nome_aluno LIKE '%A';
+
+/*c) Forneça chave primária, número de faltas e media final dos alunos matriculados na turma 1.*/
+ 
+
+/*d) Forneça chave primária dos alunos que não possuem media final na disciplina 1.*/
+SELECT id_aluno FROM historico WHERE media_final < 5;
+
+/*e) Encontre chave primaria e nome do alunos que não foram reprovados (num_faltas < 75% ou nota < 5) em alguma disciplina.*/
+SELECT id_aluno FROM historico WHERE num_faltas < 75% OR media_final < 5;
+
+/*f) Liste, em ordem alfabética, os alunos que tiveram aula com o professor JOSE REGINALDO.*/
+
+
+/*g) Encontre as disciplinas que não foram ministradas pela professora LETICIA.*/
+SELECT id_disciplina FROM turma WHERE NOT id_professor = 1;
+
+/*h) Calcule a média geral de cada turma.*/
+
+
+/*i) Quantos alunos matriculados na disciplina de BANCO DE DADOS I em cada período.*/
+
+
+/*j) Encontre o nome dos alunos que cursaram todas as disciplinas.*/
